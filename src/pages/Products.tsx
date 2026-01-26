@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import ProductsTable from "../components/products/ProductsTable";
 import type { AppDispatch, RootState } from "../app/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchProducts } from "../features/products/productsThunks";
 import Loader from "../components/common/Loader";
 import Pagination from "../components/common/Pagination";
-import { setPage } from "../features/products/productsSlice";
+import { setPage, setSearch } from "../features/products/productsSlice";
+import SearchInput from "../components/common/SearchInput";
 
 const Products = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -14,9 +15,19 @@ const Products = () => {
     (state: RootState) => state.products,
   );
 
+  const [debouncedSearch, setDebouncedSearch] = useState(search);
+
   useEffect(() => {
-    dispatch(fetchProducts({ page, limit, search }));
-  }, [dispatch, page, limit, search]);
+    dispatch(fetchProducts({ page, limit, search: debouncedSearch }));
+  }, [dispatch, page, limit, debouncedSearch]);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 400);
+
+    return () => clearTimeout(handler);
+  }, [search]);
   return (
     <div className="p-6">
       <div className="mb-4">
@@ -24,20 +35,23 @@ const Products = () => {
         <p className="text-gray-500">Browse and manage products data</p>
       </div>
 
-      <div className="mb-4">
-        {/* Search placeholder */}
-        <div className="h-10 bg-gray-100 rounded" />
+      <div className="mb-4 flex justify-between items-center">
+        <SearchInput
+          value={search}
+          onChange={(value) => dispatch(setSearch(value))}
+          placeholder="Search products..."
+        />
       </div>
 
       {loading && <Loader />}
 
-      {!loading && error && (
-        <div className="bg-red-50 text-red-600 p-4 rounded">
-          Failed to load products. Please try again later.
-        </div>
+      {!loading && !error && items.length === 0 && (
+        <div className="text-center text-gray-500 py-10">No products found</div>
       )}
 
-      {!loading && !error && <ProductsTable products={items} />}
+      {!loading && !error && items.length > 0 && (
+        <ProductsTable products={items} />
+      )}
 
       <div className="flex justify-end mt-4">
         <Pagination
