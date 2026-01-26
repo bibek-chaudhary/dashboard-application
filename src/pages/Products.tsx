@@ -4,11 +4,13 @@ import type { AppDispatch, RootState } from "../app/store";
 import { useEffect } from "react";
 import { fetchProducts } from "../features/products/productsThunks";
 import Loader from "../components/common/Loader";
+import Pagination from "../components/common/Pagination";
+import { setPage } from "../features/products/productsSlice";
 
 const Products = () => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const { items, loading, error, page, limit, search } = useSelector(
+  const { items, loading, error, page, limit, search, total } = useSelector(
     (state: RootState) => state.products,
   );
 
@@ -38,8 +40,16 @@ const Products = () => {
       {!loading && !error && <ProductsTable products={items} />}
 
       <div className="flex justify-end mt-4">
-        {/* Pagination placeholder */}
-        <div className="h-8 w-40 bg-gray-100 rounded" />
+        <Pagination
+          currentPage={page}
+          total={total}
+          limit={limit}
+          onPageChange={(newPage) => {
+            if (!loading) {
+              dispatch(setPage(newPage));
+            }
+          }}
+        />
       </div>
     </div>
   );
