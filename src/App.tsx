@@ -1,11 +1,15 @@
+import { BrowserRouter } from "react-router-dom";
+import Layout from "./components/layout/Layout";
+import AppRoutes from "./routes/AppRoutes";
+
 function App() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
-      <h1 className="text-4xl font-bold text-blue-400">
-        Tailwind + React + TypeScript 🚀
-      </h1>
-    </div>
-  )
+    <BrowserRouter>
+      <Layout>
+        <AppRoutes />
+      </Layout>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
