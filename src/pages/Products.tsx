@@ -44,7 +44,11 @@ const Products = () => {
           currentPage={page}
           total={total}
           limit={limit}
-          onPageChange={(newPage) => dispatch(setPage(newPage))}
+          onPageChange={(newPage) => {
+            if (!loading) {
+              dispatch(setPage(newPage));
+            }
+          }}
         />
       </div>
     </div>

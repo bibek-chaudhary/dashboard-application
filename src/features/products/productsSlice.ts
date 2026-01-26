@@ -27,6 +27,7 @@ const productSlice = createSlice({
   initialState,
   reducers: {
     setPage(state, action: PayloadAction<number>) {
+      if (action.payload < 1) return;
       state.page = action.payload;
     },
     setSearch(state, action: PayloadAction<string>) {
@@ -51,7 +52,6 @@ const productSlice = createSlice({
       });
   },
 });
-
 
 export const { setPage, setSearch } = productSlice.actions;
 export default productSlice.reducer;
