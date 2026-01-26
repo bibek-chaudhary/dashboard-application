@@ -3,6 +3,7 @@ import ProductsTable from "../components/products/ProductsTable";
 import type { AppDispatch, RootState } from "../app/store";
 import { useEffect } from "react";
 import { fetchProducts } from "../features/products/productsThunks";
+import Loader from "../components/common/Loader";
 
 const Products = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -11,9 +12,9 @@ const Products = () => {
     (state: RootState) => state.products,
   );
 
-  useEffect(()=>{
-    dispatch(fetchProducts({page, limit, search}));
-  },[dispatch, page, limit, search ])
+  useEffect(() => {
+    dispatch(fetchProducts({ page, limit, search }));
+  }, [dispatch, page, limit, search]);
   return (
     <div className="p-6">
       <div className="mb-4">
@@ -26,7 +27,15 @@ const Products = () => {
         <div className="h-10 bg-gray-100 rounded" />
       </div>
 
-      <ProductsTable products={items} />
+      {loading && <Loader />}
+
+      {!loading && error && (
+        <div className="bg-red-50 text-red-600 p-4 rounded">
+          Failed to load products. Please try again later.
+        </div>
+      )}
+
+      {!loading && !error && <ProductsTable products={items} />}
 
       <div className="flex justify-end mt-4">
         {/* Pagination placeholder */}
