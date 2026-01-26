@@ -20,12 +20,12 @@ export const fetchProducts = createAsyncThunk<
       const skip = (page - 1) * limit;
 
       const baseUrl = search
-        ? `/products/search?q=${search}`
+        ? `/products/search?q=${search}&`
         : category
-          ? `/products/category/${category}`
-          : `/products`;
+          ? `/products/category/${category}?`
+          : `/products?`;
 
-      const response = await api.get(`${baseUrl}?limit=${limit}&skip=${skip}`);
+      const response = await api.get(`${baseUrl}limit=${limit}&skip=${skip}`);
 
       return response.data;
     } catch (error: any) {
