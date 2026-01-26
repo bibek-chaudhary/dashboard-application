@@ -10,6 +10,7 @@ interface ProductState {
   page: number;
   limit: number;
   search: string;
+  category: string;
 }
 
 const initialState: ProductState = {
@@ -20,6 +21,7 @@ const initialState: ProductState = {
   page: 1,
   limit: 10,
   search: "",
+  category: "",
 };
 
 const productSlice = createSlice({
@@ -32,6 +34,10 @@ const productSlice = createSlice({
     },
     setSearch(state, action: PayloadAction<string>) {
       state.search = action.payload;
+      state.page = 1;
+    },
+    setCategory: (state, action: PayloadAction<string>) => {
+      state.category = action.payload;
       state.page = 1;
     },
   },
@@ -53,5 +59,5 @@ const productSlice = createSlice({
   },
 });
 
-export const { setPage, setSearch } = productSlice.actions;
+export const { setPage, setSearch, setCategory } = productSlice.actions;
 export default productSlice.reducer;
