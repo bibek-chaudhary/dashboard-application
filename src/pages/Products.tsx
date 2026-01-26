@@ -6,6 +6,7 @@ import { fetchProducts } from "../features/products/productsThunks";
 import Loader from "../components/common/Loader";
 import Pagination from "../components/common/Pagination";
 import { setPage } from "../features/products/productsSlice";
+import SearchInput from "../components/common/SearchInput";
 
 const Products = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -25,8 +26,7 @@ const Products = () => {
       </div>
 
       <div className="mb-4">
-        {/* Search placeholder */}
-        <div className="h-10 bg-gray-100 rounded" />
+        <SearchInput value="" onChange={() => {}} />
       </div>
 
       {loading && <Loader />}
