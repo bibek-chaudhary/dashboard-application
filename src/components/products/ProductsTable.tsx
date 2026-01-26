@@ -1,10 +1,12 @@
-type Product = {
-  id: number;
-  title: string;
-  price: number;
-  category: string;
-  stock: number;
-};
+// type Product = {
+//   id: number;
+//   title: string;
+//   price: number;
+//   category: string;
+//   stock: number;
+// };
+
+import type { Product } from "../../features/products/productsTypes";
 
 interface ProductsTableProps {
   products: Product[];
