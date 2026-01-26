@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { fetchProducts } from "../features/products/productsThunks";
 import Loader from "../components/common/Loader";
 import Pagination from "../components/common/Pagination";
-import { setPage } from "../features/products/productsSlice";
+import { setPage, setSearch } from "../features/products/productsSlice";
 import SearchInput from "../components/common/SearchInput";
 
 const Products = () => {
@@ -25,9 +25,14 @@ const Products = () => {
         <p className="text-gray-500">Browse and manage products data</p>
       </div>
 
-      <div className="mb-4">
-        <SearchInput value="" onChange={() => {}} />
-      </div>
+      <div className="mb-4 flex justify-between items-center">
+  <SearchInput
+    value={search}
+    onChange={(value) => dispatch(setSearch(value))}
+    placeholder="Search products..."
+  />
+</div>
+
 
       {loading && <Loader />}
 
