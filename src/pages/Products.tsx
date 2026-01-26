@@ -1,14 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
 import ProductsTable from "../components/products/ProductsTable";
 import type { AppDispatch, RootState } from "../app/store";
+import { useEffect } from "react";
+import { fetchProducts } from "../features/products/productsThunks";
 
 const Products = () => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const { items, loading, error } = useSelector(
+  const { items, loading, error, page, limit, search } = useSelector(
     (state: RootState) => state.products,
   );
 
+  useEffect(()=>{
+    dispatch(fetchProducts({page, limit, search}));
+  },[dispatch, page, limit, search ])
   return (
     <div className="p-6">
       <div className="mb-4">
