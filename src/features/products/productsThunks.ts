@@ -6,6 +6,7 @@ interface FetchProductsParams {
   page: number;
   limit: number;
   search?: string;
+  category?: string;
 }
 
 export const fetchProducts = createAsyncThunk<
@@ -14,15 +15,18 @@ export const fetchProducts = createAsyncThunk<
   { rejectValue: string }
 >(
   "products/fetchProducts",
-  async ({ page, limit, search }, { rejectWithValue }) => {
+  async ({ page, limit, search, category }, { rejectWithValue }) => {
     try {
       const skip = (page - 1) * limit;
 
-      const url = search
-        ? `/products/search?q=${search}&limit=${limit}&skip=${skip}`
-        : `/products?limit=${limit}&skip=${skip}`;
+      const baseUrl = search
+        ? `/products/search?q=${search}`
+        : category
+          ? `/products/category/${category}`
+          : `/products`;
 
-      const response = await api.get<ProductsResponse>(url);
+      const response = await api.get(`${baseUrl}?limit=${limit}&skip=${skip}`);
+
       return response.data;
     } catch (error: any) {
       return rejectWithValue(

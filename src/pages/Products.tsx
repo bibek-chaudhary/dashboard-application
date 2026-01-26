@@ -5,21 +5,25 @@ import { useEffect, useState } from "react";
 import { fetchProducts } from "../features/products/productsThunks";
 import Loader from "../components/common/Loader";
 import Pagination from "../components/common/Pagination";
-import { setPage, setSearch } from "../features/products/productsSlice";
+import {
+  setCategory,
+  setPage,
+  setSearch,
+} from "../features/products/productsSlice";
 import SearchInput from "../components/common/SearchInput";
+import CategoryFilter from "../components/common/CategoryFilter";
 
 const Products = () => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const { items, loading, error, page, limit, search, total } = useSelector(
-    (state: RootState) => state.products,
-  );
+  const { items, loading, error, page, limit, search, total, category } =
+    useSelector((state: RootState) => state.products);
 
   const [debouncedSearch, setDebouncedSearch] = useState(search);
 
   useEffect(() => {
     dispatch(fetchProducts({ page, limit, search: debouncedSearch }));
-  }, [dispatch, page, limit, debouncedSearch]);
+  }, [dispatch, page, limit, debouncedSearch, category]);
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -35,11 +39,16 @@ const Products = () => {
         <p className="text-gray-500">Browse and manage products data</p>
       </div>
 
-      <div className="mb-4 flex justify-between items-center">
+      <div className="mb-4 flex gap-4">
         <SearchInput
           value={search}
           onChange={(value) => dispatch(setSearch(value))}
           placeholder="Search products..."
+        />
+
+        <CategoryFilter
+          value={category}
+          onChange={(value) => dispatch(setCategory(value))}
         />
       </div>
 
