@@ -22,7 +22,7 @@ const Products = () => {
   const [debouncedSearch, setDebouncedSearch] = useState(search);
 
   useEffect(() => {
-    dispatch(fetchProducts({ page, limit, search: debouncedSearch }));
+    dispatch(fetchProducts({ page, limit, search: debouncedSearch, category }));
   }, [dispatch, page, limit, debouncedSearch, category]);
 
   useEffect(() => {
