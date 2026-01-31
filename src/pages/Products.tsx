@@ -39,7 +39,7 @@ const Products = () => {
         <p className="text-gray-500">Browse and manage products data</p>
       </div>
 
-      <div className="mb-4 flex gap-4">
+      <div className="mb-4 flex flex-col md:flex-row gap-4">
         <SearchInput
           value={search}
           onChange={(value) => dispatch(setSearch(value))}

@@ -16,7 +16,7 @@ const Pagination = ({
   if (totalPages <= 1) return null;
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 flex-wrap">
       <button
         className="px-3 py-1 border rounded disabled:opacity-50"
         disabled={currentPage === 1}
@@ -25,12 +25,12 @@ const Pagination = ({
         Prev
       </button>
 
-      <span className="text-sm text-gray-600">
+      <span className="text-sm text-gray-600 hidden sm:inline">
         Page {currentPage} of {totalPages}
       </span>
 
       <button
-        className="px-3 py-1 borer rounded disabled:opacity-50"
+        className="px-3 py-1 border rounded disabled:opacity-50"
         disabled={currentPage === totalPages}
         onClick={() => onPageChange(currentPage + 1)}
       >
