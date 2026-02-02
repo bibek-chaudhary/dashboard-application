@@ -88,21 +88,21 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
       {/* Modal */}
       {selectedProduct && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
-          onClick={closeModal} // Clicking outside modal closes it
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
+          onClick={closeModal}
         >
           <div
-            className="bg-white rounded shadow-lg w-full max-w-md mx-4 p-6 relative"
-            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
+            className="bg-white rounded shadow-lg w-full max-w-md mx-4 p-6 relative
+                 max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
           >
-            {/* Close Button */}
+            s{/* Close Button */}
             <button
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 font-bold"
               onClick={closeModal}
             >
               ✕
             </button>
-
             {/* Product Image */}
             {selectedProduct.images &&
               selectedProduct.images.map((imgage) => (
@@ -112,7 +112,6 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
                   className="w-full h-48 object-cover rounded mb-4"
                 />
               ))}
-
             {/* Product Info */}
             <h2 className="text-xl font-bold mb-2">{selectedProduct.title}</h2>
             <p className="mb-2">
@@ -130,7 +129,6 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
             {selectedProduct.description && (
               <p className="mb-2">{selectedProduct.description}</p>
             )}
-
             <button
               className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
               onClick={closeModal}
